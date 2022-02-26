@@ -1,12 +1,12 @@
 package common
 
 import (
-	"log"
 	"net/http"
 	"time"
 
 	"github.com/aunjaidev/aunjai-common/logger"
 	"github.com/labstack/echo/v4"
+	"github.com/sirupsen/logrus"
 )
 
 type ServerBase struct {
@@ -25,12 +25,13 @@ func init() {
 }
 
 func CreateServer(appName string, port string) *ServerBase {
+
 	e := echo.New()
 
 	// // Enable metrics middleware
 	// p := prometheus.NewPrometheus("go-"+appName, nil)
 	// p.Use(e)
-
+	logger.Logger = logrus.New()
 	e.Logger = logger.GetEchoLogger()
 	e.Use(logger.Hook())
 
@@ -46,7 +47,8 @@ func CreateServer(appName string, port string) *ServerBase {
 }
 
 func (sb *ServerBase) StartServer() {
-	log.Panic(sb.App.Start(":" + sb.Port))
+	sb.App.Logger.Info(sb.AppName + " Started ... ")
+	sb.App.Logger.Fatal(sb.App.Start(":" + sb.Port))
 }
 
 type HealthCheck struct {
