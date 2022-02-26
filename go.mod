@@ -7,6 +7,7 @@ require github.com/labstack/echo-contrib v0.12.0
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -41,6 +42,7 @@ require (
 )
 
 require (
+	github.com/labstack/echo v3.3.10+incompatible
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.10.1
 )

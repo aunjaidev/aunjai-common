@@ -6,9 +6,7 @@ import (
 	"time"
 
 	"github.com/aunjaidev/aunjai-common/logger"
-	"github.com/labstack/echo-contrib/prometheus"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 type ServerBase struct {
@@ -27,21 +25,19 @@ func init() {
 }
 
 func CreateServer(appName string, port string) *ServerBase {
-	app := echo.New()
+	e := echo.New()
 
-	// Enable metrics middleware
-	p := prometheus.NewPrometheus("go-"+appName, nil)
-	p.Use(app)
+	// // Enable metrics middleware
+	// p := prometheus.NewPrometheus("go-"+appName, nil)
+	// p.Use(e)
 
-	app.Use(middleware.GzipWithConfig(middleware.GzipConfig{
-		Level: 5,
-	}))
+	e.Logger = logger.GetEchoLogger()
+	e.Use(logger.Hook())
 
-	app.Logger = logger.GetEchoLogger()
-	app.Use(logger.Hook())
+	// app.Use(logger.Hook())
 
 	sb := &ServerBase{
-		App:     app,
+		App:     e,
 		AppName: appName,
 		Port:    port,
 	}
